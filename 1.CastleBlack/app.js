@@ -1,3 +1,4 @@
+require("dotenv").config();
 const http = require("http");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -23,7 +24,7 @@ async function run() {
   server.listen(port, host);
   consola.ready({
     message: `Server listening on http://${host}:${port}`,
-    badge: true
+    badge: true,
   });
 }
 
