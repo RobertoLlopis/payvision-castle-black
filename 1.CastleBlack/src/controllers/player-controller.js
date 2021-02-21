@@ -53,6 +53,23 @@ const armPlayer = (req, res) => {
   notFoundResponse(res, "Player not found");
 };
 
+const killPlayer = (req, res) => {
+  const { id } = req.params;
+  if (isExistingPlayer) {
+    players.forEach(
+      (player) => player.id === Number(id) && (player.health = 0)
+    );
+    res
+      .status(200)
+      .send({
+        data: returnSinglePlayer(id),
+        message: "You kill him / her  :_(",
+      });
+    return;
+  }
+  notFoundResponse(res, "Player not found");
+};
+
 const returnSinglePlayer = (id) =>
   players.filter((player) => player.id == id)[0];
 
@@ -63,4 +80,5 @@ module.exports = {
   createPlayer,
   getPlayerById,
   armPlayer,
+  killPlayer,
 };

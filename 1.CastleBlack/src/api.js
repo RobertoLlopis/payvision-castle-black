@@ -6,6 +6,7 @@ const {
   createPlayer,
   getPlayerById,
   armPlayer,
+  killPlayer,
 } = require("./Controllers/player-controller");
 // This was my data source. I move it to separate entities controllers  ////will be your data source
 
@@ -22,4 +23,5 @@ api.get("/players", listAllPlayers);
 api.post("/players", createPlayer);
 api.get("/players/:id", getPlayerById);
 api.patch("/players/:id/arm/:objectId", armPlayer);
+api.patch("/players/:id/kill", killPlayer);
 module.exports = api;
