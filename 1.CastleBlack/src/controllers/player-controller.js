@@ -27,7 +27,16 @@ const createPlayer = async (req, res) => {
   }
 };
 
+const getPlayerById = (req, res) => {
+  const { id } = req.params;
+  const player = players.filter((player) => player.id == id)[0];
+  player
+    ? res.status(200).send({ data: player })
+    : res.status(404).send({ message: "Player not found" });
+};
+
 module.exports = {
   listAllPlayers,
   createPlayer,
+  getPlayerById,
 };
