@@ -1,7 +1,7 @@
 const { validate, parse } = require("schm");
 const { playerSchema } = require("../schemas/playerSchema");
 const { isExistingObject } = require("./object-controller");
-const { notFoundResponse } = require("../utils");
+const { notFoundResponse, simpleAutoIncrement } = require("../utils");
 const players = [
   { id: 1, name: "Jon Snow", age: 23, health: 100, bag: [1] },
   { id: 2, name: "Littlefinger", age: 35, health: 100, bag: [2] },
@@ -14,7 +14,7 @@ const listAllPlayers = (_req, res) => res.json(players);
 const createPlayer = async (req, res) => {
   const player = req.body;
   //Simple autoincrement
-  player.id = players[players.length - 1].id + 1;
+  player.id = simpleAutoIncrement(players);
   try {
     //Parse JSON to fit with Schema data type
     const playerParsed = parse(player, playerSchema);
@@ -59,12 +59,10 @@ const killPlayer = (req, res) => {
     players.forEach(
       (player) => player.id === Number(id) && (player.health = 0)
     );
-    res
-      .status(200)
-      .send({
-        data: returnSinglePlayer(id),
-        message: "You kill him / her  :_(",
-      });
+    res.status(200).send({
+      data: returnSinglePlayer(id),
+      message: "You kill him / her  :_(",
+    });
     return;
   }
   notFoundResponse(res, "Player not found");
