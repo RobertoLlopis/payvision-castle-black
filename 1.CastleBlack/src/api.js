@@ -5,6 +5,7 @@ const {
   listAllPlayers,
   createPlayer,
   getPlayerById,
+  armPlayer,
 } = require("./Controllers/player-controller");
 // This was my data source. I move it to separate entities controllers  ////will be your data source
 
@@ -20,4 +21,5 @@ api.get("/objects", listAllObjects);
 api.get("/players", listAllPlayers);
 api.post("/players", createPlayer);
 api.get("/players/:id", getPlayerById);
+api.patch("/players/:id/arm/:objectId", armPlayer);
 module.exports = api;

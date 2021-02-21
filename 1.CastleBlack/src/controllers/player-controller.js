@@ -1,5 +1,7 @@
 const { validate, parse } = require("schm");
 const { playerSchema } = require("../schemas/playerSchema");
+const { isExistingObject } = require("./object-controller");
+const { notFoundResponse } = require("../utils");
 const players = [
   { id: 1, name: "Jon Snow", age: 23, health: 100, bag: [1] },
   { id: 2, name: "Littlefinger", age: 35, health: 100, bag: [2] },
@@ -32,11 +34,33 @@ const getPlayerById = (req, res) => {
   const player = players.filter((player) => player.id == id)[0];
   player
     ? res.status(200).send({ data: player })
-    : res.status(404).send({ message: "Player not found" });
+    : notFoundResponse(res, "Player not found");
 };
+
+const armPlayer = (req, res) => {
+  const { id, objectId } = req.params;
+  if (isExistingPlayer(id)) {
+    if (isExistingObject(objectId)) {
+      players.forEach(
+        (player) => player.id == id && player.bag.push(Number(objectId))
+      );
+      res.status(200).send({ data: returnSinglePlayer(id) });
+      return;
+    }
+    notFoundResponse(res, "Object not found");
+    return;
+  }
+  notFoundResponse(res, "Player not found");
+};
+
+const returnSinglePlayer = (id) =>
+  players.filter((player) => player.id == id)[0];
+
+const isExistingPlayer = (id) => players.some((player) => player.id == id);
 
 module.exports = {
   listAllPlayers,
   createPlayer,
   getPlayerById,
+  armPlayer,
 };

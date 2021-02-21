@@ -6,6 +6,10 @@ const objects = [
 ];
 const listAllObjects = (_req, res) => res.json(objects);
 
+const isExistingObject = (id) => objects.some((object) => object.id == id);
+
 module.exports = {
+  objects,
   listAllObjects,
+  isExistingObject,
 };
