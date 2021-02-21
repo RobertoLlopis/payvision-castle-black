@@ -3,6 +3,8 @@ const api = Router();
 const {
   listAllObjects,
   createObject,
+  getObjectById,
+  upgradeObject,
 } = require("./controllers/object-controller");
 const {
   listAllPlayers,
@@ -19,6 +21,8 @@ const {
 // EXAMPLE ENDPOINT: LIST ALL OBJECTS
 api.get("/objects", listAllObjects);
 api.post("/objects", createObject);
+api.get("/objects/:id", getObjectById);
+api.patch("/objects/:id/upgrade/:newValue", upgradeObject);
 
 //===================================
 //====== Players entity endpoints
@@ -28,4 +32,5 @@ api.post("/players", createPlayer);
 api.get("/players/:id", getPlayerById);
 api.patch("/players/:id/arm/:objectId", armPlayer);
 api.patch("/players/:id/kill", killPlayer);
+
 module.exports = api;

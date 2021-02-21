@@ -31,7 +31,7 @@ const createPlayer = async (req, res) => {
 
 const getPlayerById = (req, res) => {
   const { id } = req.params;
-  const player = players.filter((player) => player.id == id)[0];
+  const player = returnSinglePlayer(id);
   player
     ? res.status(200).send({ data: player })
     : notFoundResponse(res, "Player not found");

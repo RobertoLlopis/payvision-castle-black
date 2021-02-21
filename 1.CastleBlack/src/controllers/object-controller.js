@@ -1,6 +1,6 @@
 const { validate, parse } = require("schm");
 const { objectSchema } = require("../schemas/objectSchema");
-const { simpleAutoIncrement } = require("../utils");
+const { simpleAutoIncrement, notFoundResponse } = require("../utils");
 
 const objects = [
   { id: 1, name: "spoon", value: -1 },
@@ -9,6 +9,7 @@ const objects = [
   { id: 4, name: "potion", value: +20 },
 ];
 const listAllObjects = (_req, res) => res.json(objects);
+
 const createObject = async (req, res) => {
   const object = req.body;
   //Simple autoincrement
@@ -27,11 +28,36 @@ const createObject = async (req, res) => {
   }
 };
 
+const getObjectById = (req, res) => {
+  const { id } = req.params;
+  const object = objects.filter((object) => object.id == id)[0];
+  object
+    ? res.status(200).send({ data: object })
+    : notFoundResponse(res, "Object not found");
+};
+
+const upgradeObject = (req, res) => {
+  const { id, newValue } = req.params;
+  if (isExistingObject(id)) {
+    objects.forEach((obj) => obj.id === Number(id) && (obj.value = newValue));
+    res.status(200).send({
+      data: returnSingleObject(id),
+      message: "Object  successfully upgraded.",
+    });
+    return;
+  }
+  notFoundResponse(res, "Object not found");
+};
+
 const isExistingObject = (id) => objects.some((object) => object.id == id);
 
+const returnSingleObject = (id) =>
+  objects.filter((object) => object.id == id)[0];
 module.exports = {
   objects,
   listAllObjects,
   isExistingObject,
   createObject,
+  getObjectById,
+  upgradeObject,
 };
