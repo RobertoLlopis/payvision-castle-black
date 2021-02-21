@@ -5,6 +5,7 @@ const {
   createObject,
   getObjectById,
   upgradeObject,
+  deleteObject,
 } = require("./controllers/object-controller");
 const {
   listAllPlayers,
@@ -23,6 +24,7 @@ api.get("/objects", listAllObjects);
 api.post("/objects", createObject);
 api.get("/objects/:id", getObjectById);
 api.patch("/objects/:id/upgrade/:newValue", upgradeObject);
+api.delete("/objects/:id", deleteObject);
 
 //===================================
 //====== Players entity endpoints

@@ -49,6 +49,19 @@ const upgradeObject = (req, res) => {
   notFoundResponse(res, "Object not found");
 };
 
+const deleteObject = (req, res) => {
+  const { id } = req.params;
+  if (isExistingObject(id)) {
+    objects.forEach((obj) => obj.id === Number(id) && delete obj);
+    res.status(200).send({
+      data: null,
+      message: `Object ${id} successfully deleted.`,
+    });
+    return;
+  }
+  notFoundResponse(res, "Not existing object to delete");
+};
+
 const isExistingObject = (id) => objects.some((object) => object.id == id);
 
 const returnSingleObject = (id) =>
@@ -60,4 +73,5 @@ module.exports = {
   createObject,
   getObjectById,
   upgradeObject,
+  deleteObject,
 };
