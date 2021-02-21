@@ -1,7 +1,7 @@
 const { players } = require("../dataSource/dataSource");
 const { validate, parse } = require("schm");
 const { playerSchema } = require("../schemas/playerSchema");
-const { isExistingObject } = require("./object-controller");
+const { isExistingObject, returnSingleObject } = require("./object-controller");
 const { notFoundResponse, simpleAutoIncrement } = require("../utils/helpers");
 
 const listAllPlayers = (_req, res) => res.json(players);
@@ -50,7 +50,7 @@ const armPlayer = (req, res) => {
 
 const killPlayer = (req, res) => {
   const { id } = req.params;
-  if (isExistingPlayer) {
+  if (isExistingPlayer(id)) {
     players.forEach(
       (player) => player.id === Number(id) && (player.health = 0)
     );
@@ -63,11 +63,46 @@ const killPlayer = (req, res) => {
   notFoundResponse(res, "Player not found");
 };
 
+const attackPlayer = (req, res) => {
+  const {
+    attackPlayerId: attacker,
+    victimPlayerId: victim,
+    objectId,
+  } = req.params;
+
+  if (isExistingPlayer(attacker) && isExistingPlayer(victim)) {
+    if (hasPlayerObject(attacker, objectId)) {
+      const objectValue = returnSingleObject(objectId).value;
+
+      players.forEach((player) => {
+        if (player.id === Number(victim)) player.health += objectValue;
+      });
+
+      res.status(200).send({
+        data: returnSinglePlayer(victim),
+        message: "Victim health was updated",
+      });
+      return;
+    }
+    res
+      .status(400)
+      .send({ message: "Attacker does not have Object: " + objectId });
+    return;
+  }
+  notFoundResponse(res, "Attacker or victim player not found");
+};
+
 const returnSinglePlayer = (id) =>
   players.filter((player) => player.id == id)[0];
 
 const isExistingPlayer = (id) => players.some((player) => player.id == id);
 
+const hasPlayerObject = (playerId, objectId) =>
+  players.some(
+    (player) =>
+      player.id === Number(playerId) &&
+      player.bag.some((obj) => obj === Number(objectId))
+  );
 module.exports = {
   players,
   listAllPlayers,
@@ -75,4 +110,5 @@ module.exports = {
   getPlayerById,
   armPlayer,
   killPlayer,
+  attackPlayer,
 };
