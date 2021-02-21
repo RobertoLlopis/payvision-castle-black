@@ -1,13 +1,8 @@
+const { objects } = require("../dataSource/dataSource");
 const { validate, parse } = require("schm");
 const { objectSchema } = require("../schemas/objectSchema");
 const { simpleAutoIncrement, notFoundResponse } = require("../utils/helpers");
 
-const objects = [
-  { id: 1, name: "spoon", value: -1 },
-  { id: 2, name: "knife", value: -10 },
-  { id: 3, name: "sword", value: -20 },
-  { id: 4, name: "potion", value: +20 },
-];
 const listAllObjects = (_req, res) => res.json(objects);
 
 const createObject = async (req, res) => {
@@ -62,12 +57,12 @@ const deleteObject = (req, res) => {
   notFoundResponse(res, "Not existing object to delete");
 };
 
-const isExistingObject = (id) => objects.some((object) => object.id == id);
+const isExistingObject = (id) =>
+  objects.some((object) => object.id === Number(id));
 
 const returnSingleObject = (id) =>
   objects.filter((object) => object.id == id)[0];
 module.exports = {
-  objects,
   listAllObjects,
   isExistingObject,
   createObject,
