@@ -1,7 +1,7 @@
 const { validate, parse } = require("schm");
 const { playerSchema } = require("../schemas/playerSchema");
 const { isExistingObject } = require("./object-controller");
-const { notFoundResponse, simpleAutoIncrement } = require("../utils");
+const { notFoundResponse, simpleAutoIncrement } = require("../utils/helpers");
 const players = [
   { id: 1, name: "Jon Snow", age: 23, health: 100, bag: [1] },
   { id: 2, name: "Littlefinger", age: 35, health: 100, bag: [2] },

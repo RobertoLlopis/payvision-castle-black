@@ -1,6 +1,6 @@
 const { validate, parse } = require("schm");
 const { objectSchema } = require("../schemas/objectSchema");
-const { simpleAutoIncrement, notFoundResponse } = require("../utils");
+const { simpleAutoIncrement, notFoundResponse } = require("../utils/helpers");
 
 const objects = [
   { id: 1, name: "spoon", value: -1 },
