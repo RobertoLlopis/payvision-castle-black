@@ -133,6 +133,28 @@ const stealPlayer = (req, res) => {
   notFoundResponse(res, "Stealer or victim player not found");
 };
 
+const resurrectPlayer = (req, res) => {
+  const { id } = req.params;
+  if (isExistingPlayer(id)) {
+    const playerToRescue = returnSinglePlayer(id);
+    if (playerToRescue.health < 100) {
+      players.forEach(
+        (player) => player.id === Number(id) && (player.health = 100)
+      );
+      res.status(200).send({
+        data: returnSinglePlayer(id),
+        message: `Health of player ${id} fully restored`,
+      });
+      return;
+    }
+    res
+      .status(400)
+      .send({ data: null, message: "Player is already sooo healthy" });
+    return;
+  }
+  notFoundResponse(res, "Player not found");
+};
+
 const returnSinglePlayer = (id) =>
   players.filter((player) => player.id == id)[0];
 
@@ -154,4 +176,5 @@ module.exports = {
   killPlayer,
   attackPlayer,
   stealPlayer,
+  resurrectPlayer,
 };

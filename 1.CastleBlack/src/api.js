@@ -15,6 +15,7 @@ const {
   killPlayer,
   attackPlayer,
   stealPlayer,
+  resurrectPlayer,
 } = require("./Controllers/player-controller");
 const { AuthMiddleware } = require("./middlewares/Auth");
 const { isAnAvailableObject } = require("./middlewares/isAnAvailableObject");
@@ -49,5 +50,6 @@ api.patch(
   attackPlayer
 );
 api.patch("/players/steal/:stealerPlayerId/:victimPlayerId", stealPlayer);
+api.patch("/players/:id/resurrect", resurrectPlayer);
 
 module.exports = api;
