@@ -16,6 +16,7 @@ const {
   attackPlayer,
   stealPlayer,
   resurrectPlayer,
+  useObject,
 } = require("./Controllers/player-controller");
 const { AuthMiddleware } = require("./middlewares/Auth");
 const { isAnAvailableObject } = require("./middlewares/isAnAvailableObject");
@@ -45,11 +46,11 @@ api.get("/players/:id", getPlayerById);
 api.patch("/players/:id/arm/:objectId", armPlayer);
 api.patch("/players/:id/kill", killPlayer);
 api.patch("/players/:id/pickup/:objectId", isAnAvailableObject, armPlayer);
-api.patch(
-  "/players/:attackPlayerId/attack/:victimPlayerId/:objectId",
-  attackPlayer
-);
 api.patch("/players/steal/:stealerPlayerId/:victimPlayerId", stealPlayer);
 api.patch("/players/:id/resurrect", resurrectPlayer);
+api.patch(
+  "/players/:carrierPlayerId/use/:recieverPlayerId/:objectId",
+  useObject
+);
 
 module.exports = api;

@@ -72,33 +72,33 @@ const killPlayer = (req, res) => {
   notFoundResponse(res, "Player not found");
 };
 
-const attackPlayer = (req, res) => {
+const useObject = (req, res) => {
   const {
-    attackPlayerId: attacker,
-    victimPlayerId: victim,
+    carrierPlayerId: carrierId,
+    recieverPlayerId: recieverId,
     objectId,
   } = req.params;
 
-  if (isExistingPlayer(attacker) && isExistingPlayer(victim)) {
-    if (hasPlayerObject(attacker, objectId)) {
+  if (isExistingPlayer(carrierId) && isExistingPlayer(recieverId)) {
+    if (hasPlayerObject(carrierId, objectId)) {
       const objectValue = returnSingleObject(objectId).value;
 
       players.forEach((player) => {
-        if (player.id === Number(victim)) player.health += objectValue;
+        if (player.id === Number(recieverId)) player.health += objectValue;
       });
 
       res.status(200).send({
-        data: returnSinglePlayer(victim),
-        message: "Victim health was updated",
+        data: returnSinglePlayer(recieverId),
+        message: "Reciever health was updated",
       });
       return;
     }
     res
       .status(400)
-      .send({ message: "Attacker does not have Object: " + objectId });
+      .send({ message: "Carrier does not have Object: " + objectId });
     return;
   }
-  notFoundResponse(res, "Attacker or victim player not found");
+  notFoundResponse(res, "Carrier or Reciever player not found");
 };
 
 const stealPlayer = (req, res) => {
@@ -174,7 +174,7 @@ module.exports = {
   getPlayerById,
   armPlayer,
   killPlayer,
-  attackPlayer,
   stealPlayer,
   resurrectPlayer,
+  useObject,
 };
