@@ -112,6 +112,8 @@ const stealPlayer = (req, res) => {
         if (player.id === Number(stealerId)) {
           player.bag = [...player.bag, ...victim.bag];
         }
+      });
+      players.forEach((player) => {
         if (player.id === Number(victimId)) {
           player.bag = [];
         }
