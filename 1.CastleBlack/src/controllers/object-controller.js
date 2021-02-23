@@ -36,8 +36,8 @@ const upgradeObject = (req, res) => {
   if (isExistingObject(id)) {
     objects.forEach((obj) => obj.id === Number(id) && (obj.value = newValue));
     res.status(200).send({
-      data: returnSingleObject(id),
-      message: "Object  successfully upgraded.",
+      data: parse(returnSingleObject(id), objectSchema),
+      message: "Object successfully upgraded.",
     });
     return;
   }

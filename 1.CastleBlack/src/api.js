@@ -13,7 +13,6 @@ const {
   getPlayerById,
   armPlayer,
   killPlayer,
-  attackPlayer,
   stealPlayer,
   resurrectPlayer,
   useObject,

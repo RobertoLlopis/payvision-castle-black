@@ -12,6 +12,8 @@ const port = process.env.PORT || 8080;
 app.set("port", port);
 
 async function run() {
+  //*This disable hides session and technical info
+  //*If there is not particular advantage or need is good practice to hide
   app.disable("x-powered-by"); // QUESTION: any reason is this line here?
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
