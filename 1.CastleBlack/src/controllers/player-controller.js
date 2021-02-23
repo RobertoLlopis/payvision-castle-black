@@ -42,10 +42,15 @@ const armPlayer = (req, res) => {
   if (isExistingPlayer(id)) {
     if (isExistingObject(objectId)) {
       players.forEach(
-        (player) => player.id == id && player.bag.push(Number(objectId))
+        (player) =>
+          player.id == id &&
+          !player.bag.some((obj) => obj === Number(objectId)) &&
+          player.bag.push(Number(objectId))
       );
-
-      res.status(200).send({ data: returnSinglePlayer(id) });
+      res.status(200).send({
+        data: returnSinglePlayer(id),
+        message: "Armed player with object" + objectId,
+      });
       return;
     }
 
@@ -84,7 +89,7 @@ const useObject = (req, res) => {
       const objectValue = returnSingleObject(objectId).value;
 
       players.forEach((player) => {
-        if (player.id === Number(recieverId)) player.health += objectValue;
+        player.id === Number(recieverId) && (player.health += objectValue);
       });
 
       res.status(200).send({
@@ -128,7 +133,7 @@ const stealPlayer = (req, res) => {
       return;
     }
 
-    notFoundResponse(res, "Victim bag is empty");
+    notFoundResponse(res, "Victim bag is empty, not found");
     return;
   }
 

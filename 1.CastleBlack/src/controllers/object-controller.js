@@ -47,7 +47,7 @@ const upgradeObject = (req, res) => {
 const deleteObject = (req, res) => {
   const { id } = req.params;
   if (isExistingObject(id)) {
-    objects.forEach((obj) => obj.id === Number(id) && delete obj);
+    objects.forEach((obj, i) => obj.id === Number(id) && objects.splice(i, 1));
     res.status(200).send({
       data: null,
       message: `Object ${id} successfully deleted.`,
