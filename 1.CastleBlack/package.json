@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "test"
+    "test": "jest"
   },
   "author": "Payvision",
   "license": "ISC",
@@ -18,6 +18,8 @@
   "devDependencies": {
     "jest": "^23.6.0",
     "jest-junit": "^6.4.0",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "superagent": "^6.1.0",
+    "supertest": "^6.1.3"
   }
 }
