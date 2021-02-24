@@ -1,3 +1,22 @@
+# Implemented Game logic as requested
+
+Throught commits history is easible to stop and analyze how has been implemented the solution and requirements.
+
+## Schm package
+
+In order to give stability of the data and taking in count that our DB in this repo is an object strored in server memory, was added a pseudo schema package.
+This will prevent to conflicts in new items creation and is ready to be expanded in any Route if necessary.
+
+## Handle errors
+
+Besides the core funcionallity I tried to be empathic with a possible consumer of the API in order to send a message connected to the actual error.
+
+## Testing
+
+Testing is far from a unitary stric concept due to use cases chained. In case of a failure it could have on cascade effect. With a MongoDB cluster able to be reseted would have thought another aproach
+
+<h2 style="text-align: center">========= ORIGINAL README ==========</h2>
+
 # REST API implementation
 
 This is a Game of Thrones inspired REST API game. You are responsible to create the engine of the game.
